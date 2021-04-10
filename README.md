@@ -1,15 +1,4 @@
-# 🚀 Welcome to your new awesome project!
+# 🚀 Welcome to Video Poker
 
-This project has been created using **webpack-cli**, you can now run
+I was in Reno and came across this game. Thought it was fun and interesting, so instead of dropping tons of cash playing, I built my own version.
 
-```
-npm run build
-```
-
-or
-
-```
-yarn build
-```
-
-to bundle your application

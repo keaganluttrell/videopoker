@@ -5,11 +5,13 @@ import shuffleDeck from '../logic/shuffleDeck';
 import '../styles/single.css';
 import checkHand from '../logic/checkHand';
 import PayTable from './PayTable';
+import Modal from './Modal';
 
 export default function Single() {
   const MAX_BET = 10;
   const DEFAULT_DECK = createDeck();
   const EMPTY_HAND = [{}, {}, {}, {}, {}];
+  const [header, setHeader] = useState('Welcome to video poker classic');
   const [msg, setMsg] = useState('Welcome to video poker classic');
   const [deck, setDeck] = useState(reShuffleDeck());
   const [hand, setHand] = useState(EMPTY_HAND);
@@ -17,7 +19,7 @@ export default function Single() {
   const [paidOut, setPaidOut] = useState(0);
   const [bet, setBet] = useState(1);
   const [deal, setDeal] = useState(true);
-
+  const [modal, setModal] = useState(false);
   function reShuffleDeck() {
     return shuffleDeck(JSON.parse(JSON.stringify(DEFAULT_DECK)));
   }
@@ -34,6 +36,7 @@ export default function Single() {
 
   const onDealOrDraw = () => {
     if (deal) {
+      setModal(false);
       if (balance < bet) {
         setMsg('Please enter more credits');
         return;
@@ -46,7 +49,7 @@ export default function Single() {
       const newHand = [];
       for (let i = 0; i < 5; i++) newHand.push(newDeck.pop());
       setHand(newHand);
-      setMsg(checkHand(newHand).name || 'Good Luck!');
+      setHeader(checkHand(newHand).name || 'Good Luck!');
     } else {
       setDeal(true);
       const newHand = [];
@@ -61,35 +64,38 @@ export default function Single() {
         setPaidOut(bet * status.pay);
         setBalance(bet * status.pay + balance)
       };
+      setHeader('PRESS Deal to play again!')
       setMsg(status.name ? 'WINNER: ' + status.name : 'Game Over');
-      setTimeout(() => { if (deal) setMsg('Place another bet') }, 2000);
-      setDeck(reShuffleDeck())
+      setModal(true);
+      setDeck(reShuffleDeck());
     }
   };
 
   return (
-    <div id="single">
-      <PayTable bet={bet} max={MAX_BET} />
-      <div id="msg">{msg}</div>
-      <div id="hand">
-        {hand.map((c, i) => <Card item={c} key={i} deal={deal} />)}
-      </div>
-      <div id="balance">
-        <div className="info">Cash: {balance}</div>
-        <div className="info">Paid: {paidOut}</div>
-      </div>
-      <div id="buttons">
-        <div className="btn">Menu</div>
-        <div className="btn">Payouts</div>
-        <div className="info">
-          <button onClick={betDown}>&#9661;</button>
-          <div className="bet">{bet}</div>
-          <button onClick={betUp}>&#9651;</button>
+    <>
+      <div id="single">
+        <PayTable bet={bet} max={MAX_BET} />
+        <div id="msg">{header}</div>
+        <div id="hand">
+          {hand.map((c, i) => <Card item={c} key={i} deal={deal} />)}
         </div>
-        <div className="btn" onClick={betMax}>Bet Max</div>
-        <div className="btn" onClick={onDealOrDraw}>{deal ? 'Deal' : 'Draw'}</div>
+        <div id="balance">
+          <div className="info">Cash: {balance}</div>
+          <div className="info">Paid: {paidOut}</div>
+        </div>
+        <div id="buttons">
+          <div className="btn">Menu</div>
+          <div className="btn">Payouts</div>
+          <div className="info">
+            <button onClick={betDown}>&#9661;</button>
+            <div className="bet">{bet}</div>
+            <button onClick={betUp}>&#9651;</button>
+          </div>
+          <div className="btn" onClick={betMax}>Bet Max</div>
+          <div className="btn" onClick={onDealOrDraw}>{deal ? 'Deal' : 'Draw'}</div>
+        </div>
       </div>
-
-    </div>
+      <Modal msg={msg} modal={modal} />
+    </>
   )
 }

@@ -1,0 +1,17 @@
+#modal-bg {
+  height: 70vh;
+  width: 100vw;
+  position: fixed;
+  top:0;
+  left:0;
+  background-color:transparent;
+}
+
+#modal-fg {
+  background-color: rgba(47, 79, 79, 0.797);
+  color: lightgoldenrodyellow;
+  width: 830px;
+  margin: 440px auto;
+  text-align: center;
+  padding: 20px 10px;
+}

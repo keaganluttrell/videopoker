@@ -17,7 +17,7 @@ export default function Card({ item, deal }) {
 
   return (
     <div className={item.color === 'red' ? 'redCard' : 'blackCard'} onClick={toggleHold}>
-      <div className="name">{item.value || ''}</div>
+      <div className="name">{item.value || ''}{item.suit || ''}</div>
       <div className="suit">{item.suit || ''}</div>
       <div className="cardMsg">{msg}</div>
     </div>

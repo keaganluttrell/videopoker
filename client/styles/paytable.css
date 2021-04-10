@@ -1,0 +1,29 @@
+table {
+  background-color: darkslategray;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-evenly;
+  color: lightgoldenrodyellow;
+  border-collapse: collapse;
+}
+tbody {
+  border: rgb(205, 205, 86) 1px solid;
+  border-top: 2px solid rgb(205, 205, 86);
+  border-bottom: 2px solid rgb(205, 205, 86);
+  margin: 10px;
+}
+
+td {
+  border: rgb(205, 205, 86) 2px solid;
+  padding: 3px 10px;
+  border-top: none;
+  border-bottom: none;
+}
+
+table .bet {
+  background-color: tomato;
+  text-align: center;
+}
+table .blank {
+  text-align: center;
+}
